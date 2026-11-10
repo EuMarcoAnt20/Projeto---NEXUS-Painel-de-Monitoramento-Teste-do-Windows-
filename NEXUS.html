@@ -1,0 +1,1021 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEXUS | Command Center</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Share+Tech+Mono&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #05080d;
+  --panel: #0a111b;
+  --panel2: #0c1723;
+  --border: #152b3a;
+  --green: #00ff9d;
+  --blue: #00c8ff;
+  --purple: #9d65ff;
+  --red: #ff4568;
+  --text: #d7e5ed;
+  --muted: #69808e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  opacity: .12;
+  background: repeating-linear-gradient(
+    transparent 0px,
+    transparent 3px,
+    rgba(0,255,157,.04) 4px
+  );
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at 10% 10%, #003b3530, transparent 45%),
+    radial-gradient(ellipse at 90% 80%, #002b5730, transparent 45%);
+}
+
+button {
+  font-family: inherit;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 235px;
+  flex-shrink: 0;
+  background: #070d14;
+  border-right: 1px solid var(--border);
+  padding: 25px 17px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--green);
+  text-shadow: 0 0 16px #00ff9d70;
+}
+
+.logo span {
+  color: var(--blue);
+}
+
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.side-label {
+  font-size: 9px;
+  color: #526b79;
+  letter-spacing: 2px;
+  margin: 35px 0 12px 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 12px;
+  margin-bottom: 5px;
+  color: #8196a5;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.nav-item:hover, .nav-item.active {
+  color: var(--green);
+  background: #00ff9d0c;
+  border-color: #00ff9d30;
+}
+
+.nav-item .ico {
+  width: 20px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.side-bottom {
+  margin-top: auto;
+  border: 1px solid var(--border);
+  padding: 14px;
+  border-radius: 5px;
+}
+
+.side-bottom p {
+  color: var(--muted);
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+.online {
+  color: var(--green);
+  font-size: 11px;
+}
+
+.dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+  margin-right: 7px;
+}
+
+/* MAIN */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  padding: 25px 30px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  letter-spacing: 2px;
+}
+
+.page-title small {
+  display: block;
+  color: var(--muted);
+  font: 10px 'Inter';
+  letter-spacing: 1px;
+  margin-top: 7px;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.clock {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 19px;
+  color: var(--blue);
+}
+
+.system-tag {
+  font-size: 9px;
+  border: 1px solid #00ff9d50;
+  padding: 8px 12px;
+  color: var(--green);
+  letter-spacing: 1px;
+}
+
+/* WELCOME */
+
+.welcome {
+  margin: 25px 0;
+  padding: 22px;
+  background: linear-gradient(100deg, #0b1e26, #0b1520 70%, #101326);
+  border: 1px solid #17394a;
+  border-left: 3px solid var(--green);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome::after {
+  content: "N";
+  position: absolute;
+  right: 30px;
+  top: -55px;
+  font: 180px 'Orbitron';
+  color: #00ff9d08;
+}
+
+.welcome h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  letter-spacing: 2px;
+  margin-bottom: 9px;
+}
+
+.welcome h2 span {
+  color: var(--green);
+}
+
+.welcome p {
+  font-size: 11px;
+  color: #8da6b5;
+  line-height: 1.7;
+}
+
+.welcome .welcome-status {
+  margin-top: 14px;
+  font-size: 10px;
+  color: var(--green);
+  letter-spacing: 1px;
+}
+
+/* CARDS */
+
+.section-title {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #7793a2;
+  margin: 25px 0 13px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 13px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 17px;
+  border-radius: 4px;
+  min-width: 0;
+}
+
+.card-label {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.card-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 24px;
+  margin: 14px 0 7px;
+}
+
+.green { color: var(--green); }
+.blue { color: var(--blue); }
+.purple { color: var(--purple); }
+.red { color: var(--red); }
+
+.card-foot {
+  font-size: 9px;
+  color: #657e8d;
+}
+
+.bar {
+  height: 4px;
+  background: #172735;
+  margin-top: 13px;
+  overflow: hidden;
+}
+
+.bar div {
+  height: 100%;
+  width: 50%;
+  background: var(--green);
+  transition: width .5s;
+  box-shadow: 0 0 8px var(--green);
+}
+
+/* GRID */
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 4px;
+  min-width: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.panel-header h3 {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.panel-header span {
+  font-size: 9px;
+  color: var(--green);
+}
+
+canvas {
+  width: 100%;
+  height: 180px;
+  display: block;
+}
+
+/* NETWORK */
+
+.network {
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.node {
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  padding: 12px 10px;
+  font-size: 9px;
+  background: #071824;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 0 0 13px #00c8ff30;
+}
+
+.node.main-node {
+  border-color: var(--green);
+  color: var(--green);
+  padding: 18px 15px;
+  box-shadow: 0 0 20px #00ff9d30;
+}
+
+.network-line {
+  width: 32px;
+  height: 1px;
+  background: var(--blue);
+  box-shadow: 0 0 7px var(--blue);
+}
+
+/* LOGS */
+
+.logs {
+  margin-top: 15px;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.log {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 10px;
+  color: #92a8b4;
+}
+
+.log-time {
+  color: #506b7b;
+  white-space: nowrap;
+}
+
+.log-icon {
+  color: var(--green);
+}
+
+/* TERMINAL */
+
+.terminal {
+  margin-top: 15px;
+  background: #03080a;
+  border: 1px solid #14533d;
+  padding: 16px;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--green);
+  padding-bottom: 12px;
+  border-bottom: 1px solid #153326;
+  margin-bottom: 12px;
+}
+
+.terminal-output {
+  height: 145px;
+  overflow-y: auto;
+  font: 11px/1.8 'Share Tech Mono', monospace;
+  color: #8db9a5;
+}
+
+.terminal-line {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.terminal-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid #153326;
+  margin-top: 12px;
+  padding-top: 12px;
+}
+
+.terminal-input span {
+  color: var(--green);
+  font: 12px 'Share Tech Mono';
+}
+
+.terminal-input input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--green);
+  font: 12px 'Share Tech Mono';
+}
+
+.terminal-input button {
+  background: #00ff9d15;
+  color: var(--green);
+  border: 1px solid #00ff9d50;
+  padding: 8px 12px;
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.terminal-input button:hover {
+  background: #00ff9d30;
+}
+
+/* FOOTER */
+
+footer {
+  margin-top: 20px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+  color: #4e6979;
+  font-size: 9px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1050px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media(max-width: 800px) {
+  .sidebar { width: 65px; padding: 20px 8px; }
+  .logo { font-size: 12px; letter-spacing: 0; text-align: center; }
+  .logo-sub, .side-label, .nav-text, .side-bottom { display: none; }
+  .nav-item { justify-content: center; padding: 13px 5px; }
+  .nav-item .ico { width: auto; }
+  .main { padding: 20px 15px; }
+  .content-grid { grid-template-columns: 1fr; }
+}
+
+@media(max-width: 480px) {
+  .stats { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .card { padding: 12px; }
+  .card-value { font-size: 19px; }
+  .top-right { gap: 8px; }
+  .system-tag { display: none; }
+  .clock { font-size: 15px; }
+  .welcome h2 { font-size: 14px; }
+  footer { flex-direction: column; }
+  .network-line { width: 15px; }
+  .node { font-size: 8px; padding: 9px 5px; }
+  .node.main-node { padding: 13px 7px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- MENU LATERAL -->
+<aside class="sidebar">
+
+  <div class="logo">NE<span>X</span>US</div>
+  <div class="logo-sub">CYBER OPERATIONS</div>
+
+  <div class="side-label">MAIN MENU</div>
+
+  <div class="nav-item active" onclick="showSection('overview')">
+    <span class="ico">◈</span>
+    <span class="nav-text">Overview</span>
+  </div>
+
+  <div class="nav-item" onclick="showSection('network')">
+    <span class="ico">⌘</span>
+    <span class="nav-text">Network</span>
+  </div>
+
+  <div class="nav-item" onclick="showSection('security')">
+    <span class="ico">⬡</span>
+    <span class="nav-text">Security</span>
+  </div>
+
+  <div class="nav-item" onclick="showSection('terminal')">
+    <span class="ico">▣</span>
+    <span class="nav-text">Terminal</span>
+  </div>
+
+  <div class="side-label">SYSTEM</div>
+
+  <div class="nav-item" onclick="showSection('logs')">
+    <span class="ico">≡</span>
+    <span class="nav-text">System Logs</span>
+  </div>
+
+  <div class="side-bottom">
+    <p>CORE STATUS</p>
+    <div class="online"><span class="dot"></span>ALL SYSTEMS ONLINE</div>
+  </div>
+
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<main class="main">
+
+  <div class="topbar">
+    <div class="page-title">
+      COMMAND CENTER
+      <small id="pageSubtitle">CENTRAL DE OPERAÇÕES // VISÃO GERAL</small>
+    </div>
+
+    <div class="top-right">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="system-tag">● SYSTEM ONLINE</div>
+    </div>
+  </div>
+
+  <section class="welcome">
+    <h2>WELCOME TO <span>NEXUS</span></h2>
+    <p>
+      Central de monitoramento e operações digitais.
+      Todos os módulos estão inicializados.
+      Aguardando comandos do operador.
+    </p>
+    <div class="welcome-status">
+      [ ACCESS GRANTED ] // CONNECTION ESTABLISHED
+    </div>
+  </section>
+
+  <div class="section-title">01 // SYSTEM OVERVIEW</div>
+
+  <div class="stats">
+
+    <div class="card">
+      <div class="card-label">CPU USAGE</div>
+      <div class="card-value green" id="cpu">34%</div>
+      <div class="card-foot">Simulação de processamento</div>
+      <div class="bar"><div id="cpuBar"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">MEMORY USAGE</div>
+      <div class="card-value blue" id="memory">62%</div>
+      <div class="card-foot">Simulação de memória</div>
+      <div class="bar"><div id="memoryBar" style="background:var(--blue)"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">NETWORK TRAFFIC</div>
+      <div class="card-value purple" id="traffic">128</div>
+      <div class="card-foot">Unidades fictícias / segundo</div>
+      <div class="bar"><div id="trafficBar" style="background:var(--purple)"></div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">SECURITY STATUS</div>
+      <div class="card-value green" style="font-size:18px">SECURE</div>
+      <div class="card-foot">Nenhuma ameaça real verificada</div>
+      <div class="bar"><div style="width:100%"></div></div>
+    </div>
+
+  </div>
+
+  <div class="section-title">02 // LIVE MONITORING</div>
+
+  <div class="content-grid">
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>NETWORK ACTIVITY</h3>
+        <span>● LIVE SIMULATION</span>
+      </div>
+      <canvas id="chart"></canvas>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h3>NETWORK TOPOLOGY</h3>
+        <span>4 NODES</span>
+      </div>
+
+      <div class="network">
+        <div class="node">NODE 01<br>LOCAL</div>
+        <div class="network-line"></div>
+        <div class="node main-node">NEXUS<br>CORE</div>
+        <div class="network-line"></div>
+        <div class="node">NODE 02<br>REMOTE</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-title">03 // SECURITY & EVENT LOGS</div>
+
+  <div class="panel logs" id="logsPanel">
+    <div class="panel-header">
+      <h3>RECENT SYSTEM EVENTS</h3>
+      <span>● MONITORING</span>
+    </div>
+
+    <div class="log-list" id="logs">
+      <div class="log">
+        <span class="log-time">11:00:01</span>
+        <span class="log-icon">[OK]</span>
+        <span>Core system initialized.</span>
+      </div>
+      <div class="log">
+        <span class="log-time">11:00:04</span>
+        <span class="log-icon">[OK]</span>
+        <span>Network module loaded.</span>
+      </div>
+      <div class="log">
+        <span class="log-time">11:00:08</span>
+        <span class="log-icon">[OK]</span>
+        <span>Security monitoring activated.</span>
+      </div>
+      <div class="log">
+        <span class="log-time">11:00:12</span>
+        <span class="log-icon">[SYS]</span>
+        <span>Operator session established.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">04 // COMMAND INTERFACE</div>
+
+  <div class="terminal" id="terminalPanel">
+
+    <div class="terminal-header">
+      <span>NEXUS ROOT TERMINAL</span>
+      <span>SESSION ACTIVE</span>
+    </div>
+
+    <div class="terminal-output" id="output">
+      <div class="terminal-line">NEXUS OS [Version 2.0.26]</div>
+      <div class="terminal-line">Secure environment initialized.</div>
+      <div class="terminal-line">Type 'help' to see available commands.</div>
+      <div class="terminal-line" style="color:var(--green)">Operator connected. Welcome.</div>
+    </div>
+
+    <div class="terminal-input">
+      <span>root@nexus:~$</span>
+      <input id="command" placeholder="Enter command..." autocomplete="off">
+      <button onclick="executeCommand()">EXECUTE</button>
+    </div>
+
+  </div>
+
+  <footer>
+    <span>NEXUS COMMAND CENTER // VERSION 2.0.26</span>
+    <span>LOCAL SIMULATION ENVIRONMENT</span>
+  </footer>
+
+</main>
+</div>
+
+<script>
+
+// CLOCK
+function updateClock() {
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString("pt-BR");
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+
+// REAL SYSTEM METRICS
+async function updateRealMetrics() {
+  try {
+    const response = await fetch("/api/system");
+
+    if (!response.ok) {
+      throw new Error("Falha na comunicação com o servidor");
+    }
+
+    const data = await response.json();
+
+    document.getElementById("cpu").textContent =
+      data.cpu.toFixed(1) + "%";
+
+    document.getElementById("memory").textContent =
+      data.memory.toFixed(1) + "%";
+
+    document.getElementById("traffic").textContent =
+      data.disk.toFixed(1) + "%";
+
+    document.getElementById("cpuBar").style.width =
+      data.cpu + "%";
+
+    document.getElementById("memoryBar").style.width =
+      data.memory + "%";
+
+    document.getElementById("trafficBar").style.width =
+      data.disk + "%";
+
+  } catch (error) {
+    console.error("NEXUS ERROR:", error);
+  }
+}
+
+updateRealMetrics();
+setInterval(updateRealMetrics, 2000);
+
+
+// CHART
+const canvas = document.getElementById("chart");
+const ctx = canvas.getContext("2d");
+let values = Array.from({length: 35}, () => Math.random() * 100);
+
+function drawChart() {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const w = rect.width;
+  const h = rect.height;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // GRID
+  ctx.strokeStyle = "#172c3b";
+  ctx.lineWidth = 1;
+
+  for (let i = 1; i < 5; i++) {
+    let y = h * i / 5;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(w, y);
+    ctx.stroke();
+  }
+
+  // LINE
+  ctx.beginPath();
+  ctx.strokeStyle = "#00ff9d";
+  ctx.lineWidth = 2;
+  ctx.shadowBlur = 9;
+  ctx.shadowColor = "#00ff9d";
+
+  values.forEach((v, i) => {
+    const x = i * w / (values.length - 1);
+    const y = h - (v / 100 * (h - 15)) - 5;
+
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  });
+
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+}
+
+function animateChart() {
+  values.shift();
+  values.push(Math.random() * 100);
+  drawChart();
+}
+
+setInterval(animateChart, 600);
+window.addEventListener("resize", drawChart);
+drawChart();
+
+// LOGS
+function addLog(message, type = "OK") {
+  const list = document.getElementById("logs");
+  const item = document.createElement("div");
+  item.className = "log";
+
+  const time = document.createElement("span");
+  time.className = "log-time";
+  time.textContent = new Date().toLocaleTimeString("pt-BR");
+
+  const icon = document.createElement("span");
+  icon.className = "log-icon";
+  icon.textContent = "[" + type + "]";
+
+  const text = document.createElement("span");
+  text.textContent = message;
+
+  item.append(time, icon, text);
+  list.prepend(item);
+
+  while (list.children.length > 8) {
+    list.lastElementChild.remove();
+  }
+}
+
+// TERMINAL
+const output = document.getElementById("output");
+const input = document.getElementById("command");
+
+function print(message, color) {
+  const line = document.createElement("div");
+  line.className = "terminal-line";
+  line.textContent = "> " + message;
+
+  if (color) line.style.color = color;
+
+  output.appendChild(line);
+  output.scrollTop = output.scrollHeight;
+}
+
+function executeCommand() {
+  const cmd = input.value.trim().toLowerCase();
+
+  if (!cmd) return;
+
+  print("root@nexus:~$ " + cmd, "var(--green)");
+  input.value = "";
+
+  switch(cmd) {
+
+    case "help":
+      print("AVAILABLE COMMANDS:");
+      print("help      - List commands");
+      print("status    - System status");
+      print("scan      - Simulated network scan");
+      print("network   - Network information");
+      print("security  - Security overview");
+      print("date      - Current date and time");
+      print("whoami    - Current operator");
+      print("clear     - Clear terminal");
+      print("matrix    - Activate matrix effect");
+      break;
+
+    case "status":
+      print("NEXUS CORE: ONLINE");
+      print("SECURITY: ACTIVE (SIMULATED)");
+      print("NETWORK: CONNECTED (SIMULATED)");
+      print("ALL MODULES OPERATIONAL.");
+      break;
+
+    case "scan":
+      print("Initializing simulated scan...");
+      addLog("Simulated network scan started.", "SCAN");
+
+      setTimeout(() => print("Analyzing simulated nodes..."), 1000);
+      setTimeout(() => print("Checking simulated ports..."), 2000);
+      setTimeout(() => {
+        print("Scan complete. No simulated threats detected.");
+        addLog("Simulated scan completed.", "OK");
+      }, 3000);
+      break;
+
+    case "network":
+      print("NETWORK STATUS: ACTIVE (SIMULATED)");
+      print("LOCAL NODE: CONNECTED");
+      print("REMOTE NODE: SIMULATED");
+      print("TRAFFIC: " +
+        document.getElementById("traffic").textContent);
+      break;
+
+    case "security":
+      print("FIREWALL: SIMULATED ACTIVE");
+      print("THREAT LEVEL: LOW (SIMULATED)");
+      print("SECURITY MODULE: ONLINE");
+      break;
+
+    case "date":
+      print(new Date().toLocaleString("pt-BR"));
+      break;
+
+    case "whoami":
+      print("OPERATOR: ADMIN");
+      print("ACCESS LEVEL: ROOT (SIMULATED)");
+      print("ENVIRONMENT: NEXUS LOCAL");
+      break;
+
+    case "clear":
+      output.innerHTML = "";
+      break;
+
+    case "matrix":
+      print("MATRIX PROTOCOL ACTIVATED.");
+      addLog("Matrix visual protocol activated.", "SYS");
+      document.body.style.textShadow = "0 0 3px #00ff9d";
+      setTimeout(() => {
+        document.body.style.textShadow = "";
+      }, 5000);
+      break;
+
+    default:
+      print("UNKNOWN COMMAND: " + cmd, "var(--red)");
+      print("Type 'help' for available commands.");
+  }
+}
+
+input.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") executeCommand();
+});
+
+// SIDEBAR NAVIGATION
+function showSection(section) {
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  event.currentTarget.classList.add("active");
+
+  const titles = {
+    overview: "CENTRAL DE OPERAÇÕES // VISÃO GERAL",
+    network: "MONITORAMENTO // REDE",
+    security: "SEGURANÇA // PROTEÇÃO",
+    terminal: "INTERFACE // TERMINAL",
+    logs: "SISTEMA // REGISTROS"
+  };
+
+  document.getElementById("pageSubtitle").textContent =
+    titles[section];
+
+  const targets = {
+    overview: null,
+    network: document.querySelector(".content-grid"),
+    security: document.querySelector(".logs"),
+    terminal: document.querySelector(".terminal"),
+    logs: document.querySelector(".logs")
+  };
+
+  if (targets[section]) {
+    targets[section].scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  } else {
+    window.scrollTo({top: 0, behavior: "smooth"});
+  }
+}
+
+// INITIALIZATION
+addLog("NEXUS dashboard successfully loaded.", "OK");
+
+</script>
+
+</body>
+</html>
